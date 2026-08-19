@@ -55,7 +55,10 @@ build.js                   content/shapes/*.md -> dist/, with frontmatter/param 
 ## Deploy
 
 Pushing to `main` runs `.github/workflows/deploy.yml`, which builds and publishes `dist/`
-to GitHub Pages. Enable Pages for the repo with source "GitHub Actions".
+to GitHub Pages. In the repo's **Settings → Pages**, "Build and deployment → Source" must be
+set to **"GitHub Actions"** (not "Deploy from a branch") — otherwise Pages serves the raw
+`main` branch instead of this workflow's output, and `README.md` gets rendered as the
+homepage since there's no `index.html` at the repo root.
 
 ## Fonts
 
