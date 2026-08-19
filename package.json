@@ -1,0 +1,11 @@
+{
+  "name": "conversation-cartography",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An interactive atlas of the shapes conversations take.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "node scripts/serve.js"
+  }
+}

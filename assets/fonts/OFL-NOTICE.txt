@@ -1,0 +1,5 @@
+Fonts in this directory are subject to the SIL Open Font License 1.1:
+- EB Garamond (EBGaramond.ttf, EBGaramond-Italic.ttf) — Copyright Georg Duffner, Octavio Pardo, the EB Garamond Project Authors.
+- JetBrains Mono (JetBrainsMono.ttf) — Copyright 2020 The JetBrains Mono Project Authors.
+Source: https://github.com/google/fonts (ofl/ebgaramond, ofl/jetbrainsmono)
+Full license text: https://openfontlicense.org
