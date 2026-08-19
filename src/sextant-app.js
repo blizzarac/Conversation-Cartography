@@ -19,7 +19,7 @@ async function main() {
   const canvas = document.getElementById('sextant-canvas');
   const ctx = canvas.getContext('2d');
 
-  const shapes = await (await fetch('/data/shapes.json')).json();
+  const shapes = await (await fetch('data/shapes.json')).json();
 
   for (const s of shapes) {
     const btn = document.createElement('button');
@@ -46,7 +46,7 @@ async function main() {
 
   async function renderMap(turns, result) {
     const { w, h } = sizeCanvas();
-    const mod = await import(`/src/viz/shapes/${result.primary.id}.js`);
+    const mod = await import(`./viz/shapes/${result.primary.id}.js`);
     const instance = mod.create(ctx, { seed: result.primary.id });
     instance.resize(w, h);
     ctx.clearRect(0, 0, w, h);

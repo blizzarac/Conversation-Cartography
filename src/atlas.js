@@ -16,10 +16,10 @@ async function main() {
   const ctx = canvas.getContext('2d');
   const reduced = prefersReducedMotion();
 
-  const res = await fetch('/data/shapes.json');
+  const res = await fetch('data/shapes.json');
   const shapes = await res.json();
 
-  const modules = await Promise.all(shapes.map((s) => import(`/src/viz/shapes/${s.id}.js`)));
+  const modules = await Promise.all(shapes.map((s) => import(`./viz/shapes/${s.id}.js`)));
 
   let width = 0, height = 0, dpr = 1;
   let boxSize = 0;
@@ -124,7 +124,7 @@ async function main() {
   canvas.addEventListener('mouseleave', () => { hovered = null; tooltip.classList.remove('visible'); if (reduced) frame(0); });
   canvas.addEventListener('click', (ev) => {
     const e = hitTest(ev.clientX, ev.clientY);
-    if (e) window.location.href = `/shapes/${e.shape.id}/`;
+    if (e) window.location.href = `shapes/${e.shape.id}/`;
   });
 
   toggleBtn?.addEventListener('click', () => {

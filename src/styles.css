@@ -9,24 +9,24 @@
 
 @font-face {
   font-family: 'Garamond Atlas';
-  src: url('/assets/fonts/EBGaramond.ttf') format('truetype-variations'),
-       url('/assets/fonts/EBGaramond.ttf') format('truetype');
+  src: url('../assets/fonts/EBGaramond.ttf') format('truetype-variations'),
+       url('../assets/fonts/EBGaramond.ttf') format('truetype');
   font-weight: 380 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Garamond Atlas';
-  src: url('/assets/fonts/EBGaramond-Italic.ttf') format('truetype-variations'),
-       url('/assets/fonts/EBGaramond-Italic.ttf') format('truetype');
+  src: url('../assets/fonts/EBGaramond-Italic.ttf') format('truetype-variations'),
+       url('../assets/fonts/EBGaramond-Italic.ttf') format('truetype');
   font-weight: 380 700;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Mono Atlas';
-  src: url('/assets/fonts/JetBrainsMono.ttf') format('truetype-variations'),
-       url('/assets/fonts/JetBrainsMono.ttf') format('truetype');
+  src: url('../assets/fonts/JetBrainsMono.ttf') format('truetype-variations'),
+       url('../assets/fonts/JetBrainsMono.ttf') format('truetype');
   font-weight: 300 800;
   font-style: normal;
   font-display: swap;

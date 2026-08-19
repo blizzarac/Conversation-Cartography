@@ -8,7 +8,7 @@ async function main() {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
 
-  const mod = await import(`/src/viz/shapes/${shapeId}.js`);
+  const mod = await import(`./viz/shapes/${shapeId}.js`);
   const instance = mod.create(canvas.getContext('2d'), { seed: shapeId });
 
   const loop = createLoop(canvas, {

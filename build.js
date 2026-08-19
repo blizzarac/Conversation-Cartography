@@ -9,6 +9,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
 const DIST = path.join(ROOT, 'dist');
 
+// GitHub Pages project sites are served under /<repo>/, not domain root — a plain "/src/..."
+// reference 404s there. GITHUB_REPOSITORY (set by Actions) gives us the repo name to derive
+// that prefix; BASE_PATH env var overrides it (e.g. for a custom domain at root); local
+// `node build.js` + scripts/serve.js has neither set, so it falls back to "/" for dev.
+const BASE_PATH = process.env.BASE_PATH
+  || (process.env.GITHUB_REPOSITORY ? `/${process.env.GITHUB_REPOSITORY.split('/')[1]}/` : '/');
+
 function fail(msg) {
   console.error(`\n[build] ERROR: ${msg}\n`);
   process.exit(1);
@@ -217,18 +224,19 @@ function pageShell({ title, description, activeNav, bodyHtml, headExtra = '', bo
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="${BASE_PATH}">
 <title>${title} — Conversation Cartography</title>
 <meta name="description" content="${description}">
-<link rel="stylesheet" href="/src/styles.css">
-<link rel="icon" href="/assets/favicon.png" type="image/png">
+<link rel="stylesheet" href="src/styles.css">
+<link rel="icon" href="assets/favicon.png" type="image/png">
 ${headExtra}
 </head>
 <body class="${bodyClass}">
 <header class="site-header">
-  <a class="brand" href="/">Conversation Cartography</a>
+  <a class="brand" href="./">Conversation Cartography</a>
   <nav>
-    <a href="/" ${activeNav === 'atlas' ? 'aria-current="page"' : ''}>Atlas</a>
-    <a href="/sextant/" ${activeNav === 'sextant' ? 'aria-current="page"' : ''}>Sextant</a>
+    <a href="./" ${activeNav === 'atlas' ? 'aria-current="page"' : ''}>Atlas</a>
+    <a href="sextant/" ${activeNav === 'sextant' ? 'aria-current="page"' : ''}>Sextant</a>
   </nav>
 </header>
 <main>
@@ -259,7 +267,7 @@ function shapePage(shape, shapes) {
 
   const transitionsList = shape.transitions.map((tId) => {
     const t = shapes.find((s) => s.id === tId);
-    return `<li><a href="/shapes/${tId}/">${t ? t.name : tId} →</a></li>`;
+    return `<li><a href="shapes/${tId}/">${t ? t.name : tId} →</a></li>`;
   }).join('');
 
   const turnsHtml = shape.specimen.turns.map((turn, i) => {
@@ -307,8 +315,8 @@ function shapePage(shape, shapes) {
   </section>
 
   <nav class="shape-nav">
-    <a href="/shapes/${prev.id}/"><span class="label">← Previous</span>${prev.name}</a>
-    <a href="/shapes/${next.id}/"><span class="label">Next →</span>${next.name}</a>
+    <a href="shapes/${prev.id}/"><span class="label">← Previous</span>${prev.name}</a>
+    <a href="shapes/${next.id}/"><span class="label">Next →</span>${next.name}</a>
   </nav>
 </article>`;
 
@@ -317,14 +325,14 @@ function shapePage(shape, shapes) {
     description: shape.signature,
     activeNav: 'guide',
     bodyHtml,
-    headExtra: `<script type="module" src="/src/shape-page.js"></script>`,
+    headExtra: `<script type="module" src="src/shape-page.js"></script>`,
   });
 }
 
 function atlasPage(shapes) {
   const noscriptList = shapes.map((s) => `
     <li>
-      <a href="/shapes/${s.id}/">${s.name}</a>
+      <a href="shapes/${s.id}/">${s.name}</a>
       <div class="sig">${s.signature}</div>
     </li>`).join('');
 
@@ -332,7 +340,7 @@ function atlasPage(shapes) {
 <section class="atlas-intro">
   <h1>An Atlas of Conversation Shapes</h1>
   <p>Every conversation has a structure independent of its content. This is a field guide to the shapes it can take —
-  and, in the <a href="/sextant/">Sextant</a>, a way to locate a live conversation within them.</p>
+  and, in the <a href="sextant/">Sextant</a>, a way to locate a live conversation within them.</p>
 </section>
 
 <div class="atlas-canvas-wrap">
@@ -355,7 +363,7 @@ function atlasPage(shapes) {
     description: 'A naturalist\'s field guide to the shapes conversations take.',
     activeNav: 'atlas',
     bodyHtml,
-    headExtra: `<script type="module" src="/src/atlas.js"></script>`,
+    headExtra: `<script type="module" src="src/atlas.js"></script>`,
   });
 }
 
@@ -420,7 +428,7 @@ function sextantPage() {
     description: 'Paste a transcript; find out which shape of conversation you\'re in.',
     activeNav: 'sextant',
     bodyHtml,
-    headExtra: `<script type="module" src="/src/sextant-app.js"></script>`,
+    headExtra: `<script type="module" src="src/sextant-app.js"></script>`,
   });
 }
 
@@ -429,7 +437,7 @@ function notFoundPage() {
     title: 'Not Found',
     description: 'Page not found.',
     activeNav: '',
-    bodyHtml: `<h1>Not found</h1><p>That page doesn't exist. <a href="/">Return to the Atlas</a>.</p>`,
+    bodyHtml: `<h1>Not found</h1><p>That page doesn't exist. <a href="./">Return to the Atlas</a>.</p>`,
   });
 }
 
